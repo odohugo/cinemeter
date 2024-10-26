@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn {
+    @apply ring-1 rounded-md ring-slate-400 bg-slate-200 px-3 hover:bg-slate-300 active:bg-slate-100 h-7 flex items-center justify-center
+}
+
+.input {
+    @apply ring-1 rounded-md ring-slate-400 text-sm px-1 h-7
+}
+
+.navbar {
+    @apply flex items-center justify-between gap-4 w-full h-10 px-4 bg-slate-300
+}
+
+.filter-item {
+    @apply flex w-full items-center justify-center rounded-md px-4 py-2 text-center text-sm font-medium text-slate-900 bg-slate-300
+}
+
+.filter-item-active {
+    @apply bg-white shadow-sm text-slate-800 flex w-full items-center justify-center rounded-md px-4 py-2 text-center text-sm font-medium
+}
+
+.movie-search-result {
+    @apply flex items-center justify-between bg-slate-300 shadow-sm w-full rounded-xl py-2 px-4 h-28 hover:bg-slate-400
+}
