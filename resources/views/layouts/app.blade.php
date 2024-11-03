@@ -11,6 +11,7 @@
             <div class="flex items-center justify-between gap-4 w-full h-12 px-4 bg-slate-700 shadow-sm">
                 <div class="flex gap-10 items-baseline">
                     <a href="{{ route('index') }}" class="text-lg font-bold text-amber-300">Cinemeter</a>
+                    <a href="{{ route('users.profile') }}" class="text-sm text-cyan-300">Profile</a>
                     <a href="{{ route('movies.index') }}" class="text-sm text-cyan-300">Movies</a>
                     <a href="{{ route('users.index') }}" class="text-sm text-cyan-300">Users</a>
                 </div>

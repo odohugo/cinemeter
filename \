@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Support\Facades\Session;
+
+class ListsController extends Controller
+{
+    public function follow(User $targetUser)
+    {
+        $authUser = User::findOrFail(Session::get('user-id'));
+        if (!$authUser) return redirect()->route('index');
+
+        $authLists = json_decode($authUser->lists, true) ?? [];
+
+        if (!isset($authLists['following'])) {
+            $authLists['following'] = [];
+        }
+
+        if (!in_array($targetUser->id, $authLists['following'])) {
+            $authLists['following'][] = $targetUser->id;
+        }
+
+        $authUser->lists = json_encode($authLists);
+        $authUser->save();
+
+        return redirect()->back();
+    }
+
+    public function unfollow(User $targetUser)
+    {
+        $authUser = User::findOrFail(Session::get('user-id'));
+        if (!$authUser) return redirect()->route('index');
+        $lists = json_decode($authUser->lists, true) ?? [];
+
+        $index = array_search($targetUser->id, $lists['following']);
+
+        if ($index !== false) {
+            array_splice($lists['following'], $index, 1);
+        }
+
+        $authUser->lists = json_encode($lists);
+        $authUser->save();
+
+
+        return redirect()->back();
+    }
+}

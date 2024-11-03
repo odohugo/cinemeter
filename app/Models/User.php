@@ -50,4 +50,28 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class);
     }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'follower_user', 'user_id', 'follower_id');
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'follower_user', 'follower_id', 'user_id');
+    }
+
+    public function follow(User $user)
+    {
+        if (!$this->following()->where('user_id', $user->id)->exists()) {
+            $this->following()->attach($user->id);
+        }
+    }
+
+    public function unfollow(User $user)
+    {
+        //if ($this->following()->where('user_id', $user->id)->exists()) {
+        $this->following()->detach($user->id);
+        //}
+    }
 }

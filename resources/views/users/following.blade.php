@@ -10,25 +10,16 @@
             <a href="{{ route('users.reviews', ['targetUser' => $targetUser]) }}" class="hover:text-emerald-800">Reviews: {{ count($targetUser->reviews) }}</a>
         </div>
 
+        <div class="flex flex-col gap-2 mt-10">
+            @forelse($targetUser->following as $following)
+                <a href="{{ route('users.show', ['user' => $following]) }}"
+                   class="hover:text-emerald-800 w-fit"
+                    >{{$following->name}}</a>
+            @empty
+                <p>{{$targetUser->name}} is not following anyone</p>
+            @endforelse
+        </div>
 
-        @if($authUser->id == $targetUser->id)
-        @elseif($authUser->following()->where('user_id', $targetUser->id)->exists())
-            <div class="mt-2">
-                <form action="{{ route('lists.unfollow', ['targetUser' => $targetUser]) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit" class="btn">Unfollow User</button>
-                </form>
-            </div>
-        @else
-            <div class="mt-2">
-                <form action="{{ route('lists.follow', ['targetUser' => $targetUser]) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit" class="btn">Follow User</button>
-                </form>
-            </div>
-        @endif
     </div>
 
 @endsection

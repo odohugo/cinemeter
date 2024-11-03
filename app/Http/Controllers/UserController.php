@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -12,6 +13,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        if (!$request->session()->get('user-id')) {
+            return redirect()->route('index');
+        }
+
         $username = $request->input('name');
         $users = null;
 
@@ -54,12 +59,41 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(User $user)
     {
-        $user = User::with([
-            'reviews' => fn($query) => $query->latest()
-        ])->findOrFail($id);
-        return view('users.show', ['user' => $user]);
+        if (!Session::get('user-id')) {
+            return redirect()->route('index');
+        }
+        $authUser = User::findOrFail(Session::get('user-id'));
+
+        return view('users.show', ['targetUser' => $user, 'authUser' => $authUser]);
+    }
+
+    public function following(User $targetUser)
+    {
+        if (!Session::get('user-id')) {
+            return redirect()->route('index');
+        }
+
+        return view('users.following', ['targetUser' => $targetUser]);
+    }
+
+    public function followers(User $targetUser)
+    {
+        if (!Session::get('user-id')) {
+            return redirect()->route('index');
+        }
+
+        return view('users.followers', ['targetUser' => $targetUser]);
+    }
+
+    public function reviews(User $targetUser)
+    {
+        if (!Session::get('user-id')) {
+            return redirect()->route('index');
+        }
+
+        return view('users.reviews', ['targetUser' => $targetUser]);
     }
 
     /**

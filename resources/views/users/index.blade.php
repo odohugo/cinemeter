@@ -17,7 +17,7 @@
                 <ul>
                         @forelse($users as $user)
                             <li>
-                                <a href="{{ route('users.show', $user->id) }}">{{ $user->name }}</a>
+                                <a href="{{ route('users.show', ['user' => $user]) }}">{{ $user->name }}</a>
                             </li>
                         @empty
                             <li>No users found.</li>

@@ -28,6 +28,10 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
+        if (!session()->get('user-id')) {
+            return redirect()->route('index');
+        }
+
         $data = $request->validate([
             'text' => 'required|min:15',
             'rating' => 'required|min:0|max:5|integer',
