@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <div class="mt-10 w-1/2">
+    <div class="mt-10 w-full px-16">
         <form method="GET" action="{{ route('movies.index') }}">
-            <label for="title">Search for a movie</label>
+            <label for="title" class="text-lg">Search for a movie</label>
             <div class="flex gap-4 items-center mt-2">
                 <input type="text" id="title" name="title" value="{{ request('title') }}" class="input w-full h-8"/>
                 <button type="submit" class="btn">Search</button>

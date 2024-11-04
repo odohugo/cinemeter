@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .btn {
-    @apply ring-1 rounded-md ring-slate-400 bg-slate-200 px-3 hover:bg-slate-300 active:bg-slate-100 h-7 flex items-center justify-center
+    @apply flex items-center justify-center rounded-md bg-orange-600 px-2 py-1 text-white ring-orange-600 hover:ring-1 hover:text-orange-600 hover:bg-opacity-0 active:bg-orange-200
 }
 
 .input {
@@ -24,4 +24,26 @@
 
 .movie-search-result {
     @apply flex items-center justify-between bg-slate-300 shadow-sm w-full rounded-xl py-2 px-4 h-28 hover:bg-slate-400
+}
+
+.display-font {
+    font-family: "Alfa Slab One", serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.sans-font {
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.serif-font {
+    font-family: "Noto Serif", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100;
 }

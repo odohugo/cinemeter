@@ -15,8 +15,17 @@ use Illuminate\Support\Facades\Session;
 Route::get('/', function (Request $request) {
     $reviews = [];
     if ($request->session()->get('user-id')) {
-        $reviews = Review::latest()->take(5)->get();
+        $reviews = review::latest()->take(5)->get();
     };
+
+    $apikey = env("API_KEY");
+    foreach ($reviews as $review) {
+        $url = 'https://api.themoviedb.org/3/movie/' . $review->movie_id;
+        $movie = http::withheaders(['authorization' => 'bearer ' . $apikey])
+            ->get($url)->json();
+        $review->movie = $movie;
+    }
+
     return view('welcome', ['reviews' => $reviews]);
 })->name('index');
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -93,7 +94,17 @@ class UserController extends Controller
             return redirect()->route('index');
         }
 
-        return view('users.reviews', ['targetUser' => $targetUser]);
+        $reviews = $targetUser->reviews()->get();
+
+        $apikey = env("API_KEY");
+        foreach ($reviews as $review) {
+            $url = 'https://api.themoviedb.org/3/movie/' . $review->movie_id;
+            $movie = http::withheaders(['authorization' => 'bearer ' . $apikey])
+                ->get($url)->json();
+            $review->movie = $movie;
+        }
+
+        return view('users.reviews', ['targetUser' => $targetUser, 'reviews' => $reviews]);
     }
 
     /**
