@@ -2,13 +2,13 @@
 
 @section('content')
     @if(!Session::get('user-id'))
-        <div class="mt-5">
-            <h1 class="text-xl text-slate-800 text-center">Cinemeter</h1>
-        </div>
-        <div class="flex justify-center mt-12">
-            <div class="flex justify-around w-80">
-                <a class="btn" href="{{ route('login') }}">Login</a>
-                <a class="btn" href="{{ route('users.create') }}">Sign Up</a>
+        <div class="flex flex-col w-full py-10 mt-20">
+            <div class="flex flex-col items-center gap-10">
+                <p>Please log in or create an account to proceed.</p>
+                <div class="flex gap-10">
+                    <a class="btn" href="{{ route('login') }}">Login</a>
+                    <a class="btn" href="{{ route('users.create') }}">Sign Up</a>
+                </div>
             </div>
         </div>
 

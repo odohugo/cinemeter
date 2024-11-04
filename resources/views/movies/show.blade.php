@@ -49,23 +49,6 @@
             </div>
         </div>
 
-        <div class="mt-10 w-full">
-            <h3>Reviews for this movie:</h3>
-            <ul class="mt-5">
-            @forelse($reviews as $review)
-                <li>
-                    <div class="flex text-sm gap-5">
-                        <p>{{ $review->rating }}</p>
-                        <p>{{ $review->text }}</p>
-                        <p>by: {{ $review->user->name }}</p>
-                    </div>
-                </li>
-            @empty
-                <li>No reviews.</li>
-            @endforelse
-            </ul>
-        </div>
-
     </div>
 
 @endsection

@@ -21,10 +21,10 @@
                             @endphp
                             <li>
                                 <a href="{{ route('movies.show', $movie["id"]) }}">
-                                    <div class="movie-search-result">
+                                    <div class="flex gap-5 bg-white ring-1 ring-stone-300 hover:ring-orange-600 px-6 py-4 rounded-md justify-between">
                                         <div class="flex items-center gap-2">
                                             <p class="font-bold">{{ $movie['title'] }}</p>
-                                            <p class="text-sm">{{ $movie['release_date'] }}</p>
+                                            <p class="text-sm">{{ substr($movie['release_date'], 0, 4) }}</p>
                                         </div>
                                         <img src={{$posterUrl}} class="h-full rounded-md ring-2 ring-slate-600"/>
                                     </div>
