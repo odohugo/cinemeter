@@ -61,3 +61,6 @@ Route::resource('reviews', ReviewController::class);
 Route::get('users/{targetUser}/following', [UserController::class, 'following'])->name('users.following');
 Route::get('users/{targetUser}/followers', [UserController::class, 'followers'])->name('users.followers');
 Route::get('users/{targetUser}/reviews', [UserController::class, 'reviews'])->name('users.reviews');
+
+Route::post('reviews/{review}/storeComment', [ReviewController::class, 'storeComment'])->name('reviews.store-comment');
+Route::post('reviews/{review}/destroyComment', [ReviewController::class, 'destroyComment'])->name('reviews.destroy-comment');

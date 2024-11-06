@@ -59,12 +59,23 @@ class MovieController extends Controller
         }
 
         $url = 'https://api.themoviedb.org/3/movie/' . $id;
+        $creditsUrl = 'https://api.themoviedb.org/3/movie/' . $id . '/credits';
         $apiKey = env("API_KEY");
 
         $movie = Http::withHeaders(['Authorization' => 'Bearer ' . $apiKey])
             ->get($url)->json();
+        $movieCredits = Http::withHeaders(['Authorization' => 'Bearer ' . $apiKey])
+            ->get($creditsUrl)->json();
 
+        foreach ($movieCredits['crew'] as $crew) {
+            if ($crew['job'] == 'Director') {
+                $movie['director'] = $crew;
+            }
+        }
         $reviews = Review::where('movie_id', $id)->paginate();
+        foreach ($reviews as $review) {
+            $review->movie = $movie;
+        }
 
         return view('movies.show', ['movie' => $movie, 'reviews' => $reviews]);
     }
