@@ -19,8 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('movie_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('likes')->default(0);
-            $table->json('comments')->default(json_encode([]));
+            $table->json('comments')->nullable();
             $table->timestamps();
         });
     }

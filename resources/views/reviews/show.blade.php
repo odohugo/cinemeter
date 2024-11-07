@@ -107,7 +107,14 @@
             @endif
             <div class="flex flex-col gap-4 mt-10">
                 @php
-                    $comments = array_reverse(json_decode($review->comments));
+			if($review->comments)
+			{
+				$comments = array_reverse(json_decode($review->comments));
+			}
+			else
+			{
+				$comments = [];
+			}
                 @endphp
                 @forelse($comments as $comment)
                     <div class="flex bg-stone-200 px-4 py-2 rounded-md">

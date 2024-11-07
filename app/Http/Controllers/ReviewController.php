@@ -116,6 +116,10 @@ class ReviewController extends Controller
             'text' => 'required|min:1',
         ]);
 
+	if (!$review->comments)
+	{
+		$review->comments = json_encode([]);
+	}
         $comments = json_decode($review->comments);
         $comments[] = [...['id' => $user->id, 'name' => $user->name, 'text' => $data['text'], 'timestamp' => date('H:i d-m-y')]];
         $review->comments = json_encode($comments);

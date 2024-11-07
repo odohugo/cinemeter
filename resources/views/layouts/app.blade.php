@@ -13,7 +13,6 @@
         </style>
     </head>
     <body class="relative min-h-screen bg-stone-100 sans-font divide-y divide-stone-300">
-        @livewireScripts
             <div class="flex items-center justify-center gap-4 w-full h-20">
                 <div class="w-full px-6 lg:px-0 lg:w-3/5 h-12 flex justify-between items-center">
                     <div class="flex gap-10 items-baseline">
