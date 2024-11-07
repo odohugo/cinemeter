@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 .btn {
-    @apply flex items-center justify-center rounded-md bg-orange-600 px-2 py-1 text-white ring-orange-600 hover:ring-1 hover:text-orange-600 hover:bg-opacity-0 active:bg-orange-200
+    @apply flex items-center justify-center rounded-lg lg:rounded-md bg-orange-600 px-4 lg:px-2 py-1 text-white ring-orange-600 hover:ring-1 hover:text-orange-600 hover:bg-opacity-0 active:bg-orange-200 shadow-md active:shadow-none
 }
 
 .input {
-    @apply ring-1 rounded-md ring-slate-400 text-sm px-1 h-7
+    @apply ring-4 lg:ring-1 rounded-md ring-slate-400 text-3xl lg:text-sm px-1 h-14 lg:h-7
 }
 
 .navbar {

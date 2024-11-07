@@ -40,7 +40,7 @@
                             <p class="text-xs text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
-                    <textarea id="text" name="text" class="mt-2 rounded-md h-20 py-1 px-2 ring-1 ring-stone-400" required minlength=15></textarea>
+                    <textarea id="text" name="text" class="mt-2 rounded-md h-20 py-1 px-2 ring-1 ring-stone-400" required minlength=5></textarea>
                     @error('text')
                         <p class="text-xs text-red-500">{{ $message }}</p>
                     @enderror

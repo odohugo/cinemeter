@@ -116,15 +116,20 @@
 				$comments = [];
 			}
                 @endphp
-                @forelse($comments as $comment)
+                @forelse($comments as $index => $comment)
                     <div class="flex bg-stone-200 px-4 py-2 rounded-md">
                         <div class="flex flex-col flex-1">
                             <p class="font-bold">{{ $comment->name }}</p>
                             <p class="serif-font mt-1">{{ $comment->text }}</p>
                         </div>
-                        <div class="flex flex-col items-end justify-end">
-                            <p class="text-stone-800 text-xs">{{ substr($comment->timestamp, 0, 5) }}</p>
-                            <p class="text-stone-800 text-xs">{{ substr($comment->timestamp, 5) }}</p>
+                        <div class="flex flex-col items-end justify-between">
+                            @if($userId === $comment->id)
+                                <form action="{{ route('reviews.destroy-comment', ['review' => $review, 'commentIndex' => $index]) }}" method="POST">
+                                    @csrf
+                                    <button class="text-xs ring-1 ring-stone-800 hover:bg-orange-200 px-1 py-1 rounded-md">Delete Comment</button>
+                                </form>
+                            @endif
+                            <p class="text-stone-800 text-xs">{{ $comment->timestamp }}</p>
                         </div>
                     </div>
                 @empty

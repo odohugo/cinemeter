@@ -28,6 +28,9 @@ class MovieController extends Controller
             $movies = Http::withHeaders(['Authorization' => 'Bearer ' . $apiKey])
                 ->get($url, ['query' => $title, 'page' => $page])
                 ->json();
+            usort($movies['results'], function ($a, $b) {
+                return $b['popularity'] <=> $a['popularity'];
+            });
         };
 
         return view('movies.index', ['movies' => $movies]);

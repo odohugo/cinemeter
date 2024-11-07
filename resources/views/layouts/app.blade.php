@@ -12,19 +12,19 @@
         @livewireStyles
         </style>
     </head>
-    <body class="relative min-h-screen bg-stone-100 sans-font divide-y divide-stone-300">
-            <div class="flex items-center justify-center gap-4 w-full h-20">
+    <body class="relative min-h-screen bg-gradient-to-br from-stone-50 to-stone-200 sans-font divide-y divide-stone-300">
+            <div class="flex items-center justify-center gap-4 w-full h-40 xl:h-20">
                 <div class="w-full px-6 lg:px-0 lg:w-3/5 h-12 flex justify-between items-center">
-                    <div class="flex gap-10 items-baseline">
-                        <a href="{{ route('index') }}" class="text-2xl font-bold text-orange-600 display-font">Cinemeter</a>
+                    <div class="flex gap-16 xl:gap-10 items-baseline">
+                        <a href="{{ route('index') }}" class="text-4xl lg:text-2xl font-bold text-orange-600 display-font">Cinemeter</a>
                         @if (Session::get('user-id'))
-                        <a href="{{ route('users.profile') }}" class="text-sm text-stone-800 font-bold hover:text-orange-600">Profile</a>
-                        <a href="{{ route('movies.index') }}" class="text-sm text-stone-800 font-bold hover:text-orange-600">Movies</a>
-                        <a href="{{ route('users.index') }}" class="text-sm text-stone-800 font-bold hover:text-orange-600">Users</a>
+                        <a href="{{ route('users.profile') }}" class="text-3xl lg:text-sm text-stone-800 font-bold hover:text-orange-600">Profile</a>
+                        <a href="{{ route('movies.index') }}" class="text-3xl lg:text-sm text-stone-800 font-bold hover:text-orange-600">Movies</a>
+                        <a href="{{ route('users.index') }}" class="text-3xl lg:text-sm text-stone-800 font-bold hover:text-orange-600">Users</a>
                         @endif
                     </div>
                     @if (Session::get('user-id'))
-                        <a href="{{ route('logout') }}" class="text-sm btn mt-[3px]">Log Out</a>
+                        <a href="{{ route('logout') }}" class="text-3xl lg:text-sm btn mt-[3px]">Log Out</a>
                     @endif
                 </div>
             </div>

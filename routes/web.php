@@ -12,13 +12,21 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
+
+Route::get('/welcome', function (Request $request) {
+    return view('welcome');
+})->name('welcome');
+
 Route::get('/', function (Request $request) {
-    $reviews = [];
-    if ($request->session()->get('user-id')) {
-        $reviews = review::latest()->take(5)->get();
+    if (!$request->session()->get('user-id')) {
+        return redirect()->route('welcome');
     };
 
+    $reviews = [];
     $apikey = env("API_KEY");
+
+    $reviews = review::latest()->take(5)->get();
+
     foreach ($reviews as $review) {
         $url = 'https://api.themoviedb.org/3/movie/' . $review->movie_id;
         $movie = http::withheaders(['authorization' => 'bearer ' . $apikey])
@@ -26,7 +34,11 @@ Route::get('/', function (Request $request) {
         $review->movie = $movie;
     }
 
-    return view('welcome', ['reviews' => $reviews]);
+    $nowPlaying = http::withheaders(['authorization' => 'bearer ' . $apikey])
+        ->get('https://api.themoviedb.org/3/movie/now_playing')->json();
+    $nowPlaying = array_slice($nowPlaying['results'], 0, 5);
+
+    return view('index', ['reviews' => $reviews, 'nowPlaying' => $nowPlaying]);
 })->name('index');
 
 Route::get('/signup', function () {
@@ -63,4 +75,4 @@ Route::get('users/{targetUser}/followers', [UserController::class, 'followers'])
 Route::get('users/{targetUser}/reviews', [UserController::class, 'reviews'])->name('users.reviews');
 
 Route::post('reviews/{review}/storeComment', [ReviewController::class, 'storeComment'])->name('reviews.store-comment');
-Route::post('reviews/{review}/destroyComment', [ReviewController::class, 'destroyComment'])->name('reviews.destroy-comment');
+Route::post('reviews/{review}/destroyComment/{commentIndex}', [ReviewController::class, 'destroyComment'])->name('reviews.destroy-comment');

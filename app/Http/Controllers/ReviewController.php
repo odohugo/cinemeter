@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 
+use function GuzzleHttp\json_encode;
+
 class ReviewController extends Controller
 {
     /**
@@ -36,7 +38,7 @@ class ReviewController extends Controller
         }
 
         $data = $request->validate([
-            'text' => 'required|min:15',
+            'text' => 'required|min:5|max:5000',
             'rating' => 'required|min:0|max:5|integer',
             'movie_id' => 'required|integer',
             'movie_title' => 'required|string'
@@ -82,7 +84,7 @@ class ReviewController extends Controller
         }
 
         $data = $request->validate([
-            'text' => 'required|min:1',
+            'text' => 'required|min:5',
             'rating' => 'required|min:0|max:5|integer',
         ]);
 
@@ -116,10 +118,9 @@ class ReviewController extends Controller
             'text' => 'required|min:1',
         ]);
 
-	if (!$review->comments)
-	{
-		$review->comments = json_encode([]);
-	}
+        if (!$review->comments) {
+            $review->comments = json_encode([]);
+        }
         $comments = json_decode($review->comments);
         $comments[] = [...['id' => $user->id, 'name' => $user->name, 'text' => $data['text'], 'timestamp' => date('H:i d-m-y')]];
         $review->comments = json_encode($comments);
@@ -128,8 +129,16 @@ class ReviewController extends Controller
         return redirect()->back();
     }
 
-    public function destroyComment(Review $review)
+    public function destroyComment(Review $review, int $commentIndex)
     {
-        //
+        $comments = json_decode($review->comments);
+        $comments = array_reverse($comments);
+        unset($comments[$commentIndex]);
+        $comments = array_reverse($comments);
+        $comments = array_values($comments);
+        $review->comments = json_encode($comments);
+        $review->save();
+
+        return redirect()->back();
     }
 }
