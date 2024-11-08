@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -47,6 +48,16 @@ class UserController extends Controller
             'name' => 'required|min:4|max:30',
             'password' => 'required|min:8|max:30'
         ]);
+
+        if (User::where('email', '=', $data['email'])->exists()) {
+            throw ValidationException::withMessages([
+                'email' => ['That email is already in use.']
+            ]);
+        } elseif (User::where('name', '=', $data['name'])->exists()) {
+            throw ValidationException::withMessages([
+                'name' => ['That username is already in use.']
+            ]);
+        }
 
         $user = User::create($data);
 
@@ -110,9 +121,14 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $userId)
     {
-        //
+        if (session()->get('user-id') != $userId) {
+            return redirect()->route('index');
+        }
+
+        $user = User::findOrFail($userId);
+        return view('users.edit', ['user' => $user]);
     }
 
     /**
@@ -126,8 +142,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        Session::flush();
+        return redirect()->route('welcome');
     }
 }

@@ -14,11 +14,25 @@
     </head>
     <body class="relative min-h-screen bg-gradient-to-br from-stone-50 to-stone-200 sans-font divide-y divide-stone-300">
             <div class="flex items-center justify-center gap-4 w-full h-40 xl:h-20">
-                <div class="w-full px-6 lg:px-0 lg:w-3/5 h-12 flex justify-between items-center">
+                <nav class="w-full px-6 lg:px-0 lg:w-3/5 h-12 flex justify-between items-center">
                     <div class="flex gap-16 xl:gap-10 items-baseline">
                         <a href="{{ route('index') }}" class="text-4xl lg:text-2xl font-bold text-orange-600 display-font">Cinemeter</a>
                         @if (Session::get('user-id'))
-                        <a href="{{ route('users.profile') }}" class="text-3xl lg:text-sm text-stone-800 font-bold hover:text-orange-600">Profile</a>
+                        <div class="relative px-1" x-data="{dropdown: false}" @mouseenter="dropdown = true" @mouseleave="dropdown = false">
+                            <a href="{{ route('users.profile') }}" class="text-3xl lg:text-sm text-stone-800 font-bold hover:text-orange-600">{{session::get('user-name')}}</a>
+                            <div x-clock x-show="dropdown" class="absolute top-6 left-0 px-1 py-2">
+                                <div x-cloak x-show="dropdown" class="flex flex-col gap-4 w-36 bg-stone-200 ring-1 ring-stone-400 rounded-md shadow-md divide-y divide-stone-300 text-sm py-3 px-2"
+                                    x-transition:enter="transition ease-out duration-200"
+                                    x-transition:enter-start="opacity-0 transform -translate-y-2"
+                                    x-transition:enter-end="opacity-100 transform translate-y-0"
+                                    x-transition:leave="transition ease-in duration-150"
+                                    x-transition:leave-start="opacity-100 transform translate-y-0"
+                                    x-transition:leave-end="opacity-0 transform -translate-y-2">
+                                    <a href="{{ route('users.profile') }}" class="mb-[-5px] h-full w-full font-bold hover:text-orange-600">Profile</a>
+                                    <a href="{{ route('users.edit', ['user' => Session::get('user-id')]) }}" class="pt-[12px] h-full w-full font-bold hover:text-orange-600">Account options</a>
+                                </div>
+                            </div>
+                        </div>
                         <a href="{{ route('movies.index') }}" class="text-3xl lg:text-sm text-stone-800 font-bold hover:text-orange-600">Movies</a>
                         <a href="{{ route('users.index') }}" class="text-3xl lg:text-sm text-stone-800 font-bold hover:text-orange-600">Users</a>
                         @endif
@@ -26,7 +40,7 @@
                     @if (Session::get('user-id'))
                         <a href="{{ route('logout') }}" class="text-3xl lg:text-sm btn mt-[3px]">Log Out</a>
                     @endif
-                </div>
+                </nav>
             </div>
 
 
